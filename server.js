@@ -4,8 +4,6 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-import {dtdValid,reduceByKey,transformToDict,transformDTDToDict,toDirectory,checkWellFormed,generateTree} from "./core"
-
 var swig  = require('swig');
 var React = require('react');
 var Router = require('react-router');
