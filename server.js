@@ -21,32 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.route('/api/check').post(async(req,res,next)=>{
-  var isFormed = true;
-  var isValid = true;
-  var data = JSON.parse(req.body.data);
-  var dtd = JSON.parse(req.body.dtd);
-  data = data.map(i=>transformToDict(i));
-  if(data.includes(null))
-    isFormed = false;
-  else
-    isFormed = (checkWellFormed(data));
-  if(isFormed == false) res.send("This is not a well-Formed XML file. Stop checking!!!");
-  else{
-    var tree = await generateTree(data);
-    var nodeArray = [];
-    tree.traverseDF(function(node) {
-      nodeArray = node;
-    });
-    var newArr = reduceByKey(nodeArray);
-    dtd = dtd.map(i=>transformDTDToDict(i));
-    var dtdResult = await toDirectory(dtd);
-    try{
-      isValid =(dtdValid(newArr,dtdResult));
-      if(isValid) res.send("This is a well-Formed XML file, And this can be valided by your DTD file.")
-      else res.send("This is a well-Formed XML file, And this cannot be valided by your DTD file.")
-    }
-    catch(e){res.send("Opps!! "+e)}
-  }
 })
 
 app.use(function(req, res) {
